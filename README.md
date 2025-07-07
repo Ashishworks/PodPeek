@@ -40,5 +40,3 @@
 
 ---
 
-## 📁 Folder Structure (Planned)
-
