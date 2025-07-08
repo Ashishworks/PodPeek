@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { generateSummaryWithTogether } = require("../services/togetherService");
+const { generateSummaryWithTogether } = require("../../client/src/services/togetherService");
 
 router.post("/", async (req, res) => {
   const { name, description, snippets } = req.body;
