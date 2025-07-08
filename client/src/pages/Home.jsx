@@ -2,12 +2,20 @@ import { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import { getAIInsights } from "../services/togetherService";
 import { splitIntoSections } from "../utils/splitIntoSections";
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+import html2pdf from "html2pdf.js"; // (for PDF)
+
+
 
 const Home = () => {
     const [selected, setSelected] = useState(null);
     const [aiOutput, setAiOutput] = useState("");
     const [aiSections, setAiSections] = useState({});
     const [loading, setLoading] = useState(false);
+    const [script, setScript] = useState("");
+    const [generating, setGenerating] = useState(false);
+    const scriptRef = useRef();
 
     useEffect(() => {
         const fetchAI = async () => {
@@ -30,7 +38,38 @@ const Home = () => {
             .replace(/^-+$/gm, '')             // any line that is just dashes
             .trim();
     }
+    const handleScriptGenerate = async () => {
+        if (!selected) return;
+        setGenerating(true);
 
+        const res = await fetch("http://localhost:5000/api/script", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: selected.name,
+                description: selected.description,
+            }),
+        });
+
+        const data = await res.json();
+        setScript(data.output);
+        setGenerating(false);
+
+    }
+    const handlePrint = useReactToPrint({
+        content: () => scriptRef.current,
+    });
+    const handleDownloadPDF = () => {
+        const element = scriptRef.current;
+        const opt = {
+            margin: 0.5,
+            filename: `${selected.name}_PodcastScript.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save();
+    };
 
     return (
         <div className="p-6">
@@ -56,17 +95,65 @@ const Home = () => {
                     {loading ? (
                         <p className="text-sm text-gray-500">Loading AI insights...</p>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {Object.entries(aiSections).map(([title, content]) => (
-                                <div key={title} className="bg-white p-4 border rounded shadow-sm">
-                                    <h3 className="text-md font-bold mb-2">{title}</h3>
-                                    <p className="text-sm text-gray-800 whitespace-pre-wrap">{cleanMarkdown(content)}</p>
-                                </div>
-                            ))}
-                        </div>
+                        <>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {Object.entries(aiSections).map(([title, content]) => (
+                                    <div key={title} className="bg-white p-4 border rounded shadow-sm">
+                                        <h3 className="text-md font-bold mb-2">{title}</h3>
+                                        <p className="text-sm text-gray-800 whitespace-pre-wrap">
+                                            {cleanMarkdown(content)}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* 🎤 Generate Script Section */}
+                            <div className="mt-6">
+                                <button
+                                    onClick={handleScriptGenerate}
+                                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                                >
+                                    🎤 Generate Podcast Script
+                                </button>
+
+                                {generating && (
+                                    <p className="text-sm text-gray-500 mt-2">Generating script...</p>
+                                )}
+
+                                {script && (
+                                    <div className="mt-6" ref={scriptRef}>
+                                        <div className="flex gap-4 mb-4">
+                                            <button
+                                                onClick={handlePrint}
+                                                className="bg-blue-600 text-white px-4 py-2 rounded shadow"
+                                            >
+                                                🖨️ Print Script
+                                            </button>
+                                            <button
+                                                onClick={handleDownloadPDF}
+                                                className="bg-green-600 text-white px-4 py-2 rounded shadow"
+                                            >
+                                                📥 Download as PDF
+                                            </button>
+                                        </div>
+
+                                        <div className="bg-white border p-4 rounded shadow whitespace-pre-wrap">
+                                            <h3 className="text-lg font-semibold mb-2">📝 Podcast Script</h3>
+                                            <pre className="text-sm text-gray-800">{cleanMarkdown(script)}</pre>
+                                        </div>
+                                    </div>
+                                )}
+
+
+
+                            </div>
+                        </>
                     )}
+
                 </div>
+
             )}
+
         </div>
     );
 };

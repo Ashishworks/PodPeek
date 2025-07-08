@@ -37,7 +37,6 @@ router.get("/", async (req, res) => {
       suggestions.push({
         name: item.title,
         description: item.snippet,
-        image: item.favicon?.url || `https://www.google.com/s2/favicons?domain=${item.link}&sz=64`,
         url: item.link,
       });
 

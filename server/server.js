@@ -14,6 +14,7 @@ app.use(express.json()); // for parsing application/json
 app.use("/api/suggest", require("./routes/suggest"));
 app.use("/api/search", require("./routes/search"));
 app.use("/api/ai", require("./routes/ai"));
+app.use("/api/script", require("./routes/script"));
 
 // Root test route (optional)
 app.get("/", (req, res) => {

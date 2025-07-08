@@ -34,7 +34,8 @@ Sensitive or uncomfortable subjects to avoid in the podcast — such as personal
 Any public backlash, scandals, or events that created tension, backlash, or polarization.
 
 ## 5. Most Recent Updates
-Highlight what they’ve done in the past month. Travel, interviews, public appearances, projects, etc.
+Highlight what they’ve done in the past 3 month. Travel, interviews, public appearances, projects, etc.
+return 2025 info if you failed to found recent info
 
 ## 6. Current Projects
 What are they working on now — businesses, content, startups, missions, hobbies, or advocacy.
