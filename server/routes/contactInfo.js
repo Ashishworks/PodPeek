@@ -1,22 +1,28 @@
 const express = require("express");
-const axios = require("axios");
 const router = express.Router();
+const axios = require("axios");
 
 router.post("/", async (req, res) => {
-  const { name, description,numQuestions = 20 } = req.body;
+  const { name, description } = req.body;
 
   if (!name || !description) {
     return res.status(400).json({ error: "Missing name or description" });
   }
 
   const prompt = `
-I’m going to take a podcast interview of **${name}**, who is ${description}.
-Please generate ${numQuestions} thoughtful, unique, and engaging podcast questions that:
-- Encourage storytelling
-- Show research-based awareness
-- Are not generic
+ **${name}** who is described as **${description}**.
+ search all the platforms and whole internet deeply to find info stated below
 
-Return only the list of questions in markdown numbering points, no intro or summary.
+Return only relevant contact info in this format:
+
+- Email:
+- Website:
+- LinkedIn:
+- Twitter:
+- Instagram:
+- Any other relevant social or booking links:
+
+If any of the above are not available, mention "Not Found". Keep it precise.
 `;
 
   try {
@@ -26,7 +32,6 @@ Return only the list of questions in markdown numbering points, no intro or summ
         model: "deepseek-ai/DeepSeek-V3",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.7,
-        max_tokens: 800,
       },
       {
         headers: {
@@ -36,11 +41,11 @@ Return only the list of questions in markdown numbering points, no intro or summ
       }
     );
 
-    const script = response.data.choices[0].message.content;
-    res.json({ output: script });
+    const contactInfo = response.data.choices[0].message.content;
+    res.json({ output: contactInfo });
   } catch (err) {
-    console.error("Together.ai error:", err.message);
-    res.status(500).json({ error: "Failed to generate podcast script" });
+    console.error("Together.ai contact info error:", err.message);
+    res.status(500).json({ error: "Failed to fetch contact info" });
   }
 });
 

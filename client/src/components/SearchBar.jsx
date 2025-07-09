@@ -31,6 +31,11 @@ const SearchBar = ({ onSelect, selected }) => {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSearch(); // call your search function
+            }
+          }}
           className="border border-gray-300 rounded px-3 py-2 w-full"
           placeholder="Enter name..."
         />

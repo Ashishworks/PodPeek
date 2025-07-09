@@ -15,6 +15,8 @@ app.use("/api/suggest", require("./routes/suggest"));
 app.use("/api/search", require("./routes/search"));
 app.use("/api/ai", require("./routes/ai"));
 app.use("/api/script", require("./routes/script"));
+app.use("/api/contact-info",require("./routes/contactInfo")); 
+
 
 // Root test route (optional)
 app.get("/", (req, res) => {
