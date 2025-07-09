@@ -16,14 +16,11 @@ const Home = () => {
     const [loading, setLoading] = useState(false);
     const [script, setScript] = useState("");
     const [generating, setGenerating] = useState(false);
-    const [contactInfo, setContactInfo] = useState("");
-    const [contactLoading, setContactLoading] = useState(false);
-    const [numQuestions, setNumQuestions] = useState(20);
+    const [numQuestions, setNumQuestions] = useState(10);
     useEffect(() => {
         const fetchAI = async () => {
             if (!selected) return;
             setScript("");
-            setContactInfo("");
             setLoading(true);
             const output = await getAIInsights(selected);
             setAiOutput(output);
@@ -35,22 +32,7 @@ const Home = () => {
         fetchAI();
     }, [selected]);
     
-    const handleContactInfoGenerate = async () => {
-        if (!selected) return;
-        setContactLoading(true);
-        const res = await fetch("http://localhost:5000/api/contact-info", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                name: selected.name,
-                description: selected.description,
-            }),
-        });
-
-        const data = await res.json();
-        setContactInfo(data.output);
-        setContactLoading(false);
-    };
+    
     return (
         <div className="p-6">
             <h1 className="text-3xl font-bold text-center mb-6">🎙️ PodPeek</h1>
@@ -59,15 +41,11 @@ const Home = () => {
             {selected && (
                 <div className="mt-6 bg-gray-50 p-4 rounded shadow">
                     <PersonCard person={selected} />
-                    <ContactInfo
-                        contactInfo={contactInfo}
-                        contactLoading={contactLoading}
-                        onGenerate={handleContactInfoGenerate}
-                    />
+                    <ContactInfo selected={selected} />
                     <hr className="my-4" />
 
                     {loading ? (
-                        <p className="text-sm text-gray-500">Loading AI insights...</p>
+                        <p className="text-sm text-gray-500">Loading AI insights... usually takes less than a minute</p>
                     ) : (
                         <>
                             <InsightsGrid aiSections={aiSections} />

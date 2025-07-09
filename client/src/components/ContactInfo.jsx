@@ -1,17 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
-const ContactInfo = ({ contactInfo, contactLoading, onGenerate }) => {
+const ContactInfo = ({ selected }) => {
+  const [contactInfo, setContactInfo] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleGenerate = async () => {
+    if (!selected) return;
+    setLoading(true);
+
+    const res = await fetch("http://localhost:5000/api/contact-info", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: selected.name,
+        description: selected.description,
+      }),
+    });
+
+    const data = await res.json();
+    setContactInfo(data.output);
+    setLoading(false);
+  };
+
   return (
     <div className="mt-4">
       <button
-        onClick={onGenerate}
+        onClick={handleGenerate}
         className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
       >
         📇 Generate Contact Info
       </button>
 
-      {contactLoading && (
+      {loading && (
         <p className="text-sm text-gray-500 mt-2">Fetching contact info...</p>
       )}
 

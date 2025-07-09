@@ -3,7 +3,7 @@ const axios = require("axios");
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  const { name, description,numQuestions = 20 } = req.body;
+  const { name, description,numQuestions = 10 } = req.body;
 
   if (!name || !description) {
     return res.status(400).json({ error: "Missing name or description" });
@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
 
   const prompt = `
 I’m going to take a podcast interview of **${name}**, who is ${description}.
-Please generate ${numQuestions} thoughtful, unique, and engaging podcast questions that:
+Please generate exactly ${numQuestions} thoughtful, unique, and engaging podcast questions that:
 - Encourage storytelling
 - Show research-based awareness
 - Are not generic
