@@ -1,4 +1,4 @@
-const API_BASE = `${import.meta.env.VITE_BACKEND_URL}api`;
+const API_BASE = `${import.meta.env.VITE_BACKEND_URL}/api`;
 
 export async function getAIInsights(person) {
   try {
