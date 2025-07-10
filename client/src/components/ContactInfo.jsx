@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 const ContactInfo = ({ selected }) => {
   const [contactInfo, setContactInfo] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setContactInfo("");
+  }, [selected]);
 
   const handleGenerate = async () => {
     if (!selected) return;
