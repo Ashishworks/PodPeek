@@ -63,7 +63,6 @@ const Home = () => {
                                 setNumQuestions={setNumQuestions}
                                 setScriptQuestions={setScriptQuestions}
                             />
-                            {console.log(scriptQuestions)}
                             {script && <QuestionVariator questions={scriptQuestions} />}
                         </>
                     )}

@@ -7,10 +7,6 @@ const QuestionVariator = ({ questions }) => {
 
     const handleGenerateVariations = async () => {
         const qNum = parseInt(index, 10);
-        console.log(qNum);
-        console.log("qNum:", qNum);
-        console.log("questions:", questions);
-        console.log("questions.length:", questions.length);
         if (qNum < 1 || qNum > questions.length) {
             return alert("Invalid question number");
         }
