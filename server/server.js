@@ -16,9 +16,10 @@ app.use("/api/search", require("./routes/search"));
 app.use("/api/ai", require("./routes/ai"));
 app.use("/api/script", require("./routes/script"));
 app.use("/api/contact-info",require("./routes/contactInfo")); 
+app.use("/api/variations", require("./routes/variations"));
 
 
-// Root test route (optional)
+// Root test route 
 app.get("/", (req, res) => {
   res.send("PodPeek backend is running ✅");
 });

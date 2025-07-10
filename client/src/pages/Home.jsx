@@ -7,6 +7,8 @@ import PersonCard from "../components/PersonCard";
 import ContactInfo from "../components/ContactInfo";
 import InsightsGrid from "../components/InsightsGrid";
 import ScriptBox from "../components/ScriptBox";
+import QuestionVariator from "../components/QuestionVariator";
+
 
 
 const Home = () => {
@@ -17,6 +19,8 @@ const Home = () => {
     const [script, setScript] = useState("");
     const [generating, setGenerating] = useState(false);
     const [numQuestions, setNumQuestions] = useState(10);
+    const [scriptQuestions, setScriptQuestions] = useState([]);
+
     useEffect(() => {
         const fetchAI = async () => {
             if (!selected) return;
@@ -57,7 +61,10 @@ const Home = () => {
                                 setGenerating={setGenerating}
                                 numQuestions={numQuestions}
                                 setNumQuestions={setNumQuestions}
+                                setScriptQuestions={setScriptQuestions}
                             />
+                            {console.log(scriptQuestions)}
+                            {script && <QuestionVariator questions={scriptQuestions} />}
                         </>
                     )}
                 </div>

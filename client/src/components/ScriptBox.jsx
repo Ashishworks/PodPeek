@@ -9,6 +9,7 @@ const ScriptBox = ({
   setGenerating,
   numQuestions,
   setNumQuestions,
+  setScriptQuestions,
 }) => {
   const scriptRef = useRef();
 
@@ -28,6 +29,12 @@ const ScriptBox = ({
     const data = await res.json();
     setScript(data.output);
     setGenerating(false);
+    const extractedQuestions = data.output
+      .split("\n")
+      .filter(line => /^\d+\.\s/.test(line)) // lines like "1. What is your name?"
+      .map(line => line.replace(/^\d+\.\s*/, "").trim());
+    console.log(extractedQuestions);
+    setScriptQuestions(extractedQuestions);
   };
 
   const handleDownloadPDF = () => {
