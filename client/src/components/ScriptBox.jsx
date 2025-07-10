@@ -16,7 +16,7 @@ const ScriptBox = ({
   const handleScriptGenerate = async () => {
     if (!selected) return;
     setGenerating(true);
-    const res = await fetch("http://localhost:5000/api/script", {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/script`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

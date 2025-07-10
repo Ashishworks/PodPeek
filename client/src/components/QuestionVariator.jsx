@@ -14,7 +14,7 @@ const QuestionVariator = ({ questions }) => {
         const question = questions[qNum - 1];
 
         setLoading(true);
-        const res = await fetch("http://localhost:5000/api/variations", {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/variations`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ question }),
