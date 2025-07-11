@@ -1,4 +1,5 @@
-const API_BASE = `http://localhost:5000/api`;
+const API_BASE = `https://podpeek.onrender.com/api`;
+// const API_BASE = `http://localhost:5000/api`; // for local run 
 
 export async function getAIInsights(person) {
   try {
