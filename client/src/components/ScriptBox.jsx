@@ -77,7 +77,7 @@ const ScriptBox = ({
           id="questionSlider"
           type="range"
           min="1"
-          max="30"
+          max="40"
           value={numQuestions}
           onChange={(e) => setNumQuestions(Number(e.target.value))}
           className="w-full"
