@@ -8,6 +8,7 @@ import ContactInfo from "../components/ContactInfo";
 import InsightsGrid from "../components/InsightsGrid";
 import ScriptBox from "../components/ScriptBox";
 import QuestionVariator from "../components/QuestionVariator";
+import TrueFocus from "../animations/TrueFocus";
 
 
 
@@ -35,11 +36,20 @@ const Home = () => {
 
         fetchAI();
     }, [selected]);
-    
-    
+
+
     return (
         <div className="p-6">
-            <h1 className="text-3xl font-bold text-center mb-6">🎙️ PodPeek</h1>
+            <div className="mb-6">
+            <TrueFocus
+                sentence="Pod Peek"
+                manualMode={false}
+                blurAmount={5}
+                borderColor="red"
+                animationDuration={1}
+                pauseBetweenAnimations={1}
+            />
+            </div>
             <SearchBar onSelect={(person) => setSelected(person)} selected={selected} />
 
             {selected && (
