@@ -28,7 +28,7 @@ const ContactInfo = ({ selected }) => {
   };
 
   return (
-    <div className="mt-4">
+    <div className="mt-4  ">
       <button
         onClick={handleGenerate}
         className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
@@ -41,7 +41,7 @@ const ContactInfo = ({ selected }) => {
       )}
 
       {contactInfo && (
-        <div className="mt-4 bg-white p-4 rounded shadow-sm">
+        <div className="mt-4 bg-white p-4 rounded shadow-sm bg-transparent">
           <h3 className="text-lg font-semibold mb-2">📬 Contact Info</h3>
           <ReactMarkdown
             components={{

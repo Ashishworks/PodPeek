@@ -25,8 +25,8 @@ const SearchBar = ({ onSelect, selected }) => {
   };
 
   return (
-    <div className="mb-4">
-      <div className="flex gap-2">
+    <div >
+      <div className="flex gap-2 ">
         <input
           type="text"
           value={query}
@@ -36,42 +36,36 @@ const SearchBar = ({ onSelect, selected }) => {
               handleSearch(); // call your search function
             }
           }}
-          className="border border-gray-300 rounded px-3 py-2 w-full"
+          className="w-full px-4 py-2 rounded-2xl bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600"
           placeholder="Enter name..."
         />
         <button
           onClick={handleSearch}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className="bg-black text-white px-4 py-2 rounded-2xl"
         >
           Search
         </button>
       </div>
 
       {suggestions.length > 0 && (
-        <ul className="mt-2 border rounded shadow bg-white">
+        <ul className="mt-2 border rounded-2xl shadow bg-black/85">
           {suggestions.map((item, idx) => (
             <li
               key={idx}
               onClick={() => handleSelect(item)}
-              className="p-2 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+              className="p-2 hover:bg-gray-700 cursor-pointer flex items-center gap-2 transition-colors duration-300 rounded-2xl mx-2 my-2"
+
             >
-              {item.image && (
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-6 h-6 rounded"
-                />
-              )}
               <div>
-                <p className="font-medium">{item.name}</p>
-                <p className="text-xs text-gray-600">{item.description}</p>
+                <p className="font-medium text-white">{item.name}</p>
+                <p className="text-xs text-gray-200">{item.description}</p>
               </div>
             </li>
           ))}
         </ul>
       )}
 
-      {loading && <p className="text-sm text-gray-500 mt-2">Searching...</p>}
+      {loading && <p className="text-sm text-white mt-2">Searching...</p>}
     </div>
   );
 };
