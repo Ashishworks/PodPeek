@@ -1,9 +1,20 @@
+import Aurora from "../animations/Aurora";
+
+
 const PersonCard = ({ person }) => {
   if (!person) return null;
 
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-2">Selected Person</h2>
+    <div className="relative p-4 rounded-xl overflow-hidden border text-white">
+      {/* <div className="absolute inset-0 -z-10">
+        <Aurora
+          colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+          blend={0.5}
+          amplitude={1.0}
+          speed={0.5}
+        />
+      </div> */}
+      <h2 className="text-xl font-semibold mb-2 bg-transparent">Selected Person</h2>
       {person.image && (
         <img
           src={person.image}
@@ -24,6 +35,7 @@ const PersonCard = ({ person }) => {
           {person.url}
         </a>
       </p>
+
     </div>
   );
 };

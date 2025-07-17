@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import ShinyText from "../animations/ShinyText";
 import { LoaderOne } from "../animations/Loader";
+import SpotlightCard from "../animations/SpotLightCard";
+
 
 const ContactInfo = ({ selected }) => {
   const [contactInfo, setContactInfo] = useState("");
@@ -43,7 +45,6 @@ const ContactInfo = ({ selected }) => {
       2000 // 2 seconds delay
     );
 
-
     const data = await res.json();
     setContactInfo(data.output);
     setLoading(false);
@@ -55,7 +56,7 @@ const ContactInfo = ({ selected }) => {
         onClick={handleGenerate}
         className="px-2 py-2 border-4 border-purple-500 text-purple-500 rounded-2xl hover:bg-purple-500 hover:text-white transition"
       >
-       Generate Contact Info
+        Generate Contact Info
       </button>
 
       {loading && (
@@ -65,7 +66,8 @@ const ContactInfo = ({ selected }) => {
       )}
 
       {contactInfo && (
-        <div className="mt-4 bg-black p-4 rounded-2xl shadow-sm bg-transparent border-4">
+        <div className="mt-4 p-4">
+          <SpotlightCard className="custom-spotlight-card" spotlightColor="rgba(128, 0, 255, 0.4)">
           <h3 className="text-lg text-white font-semibold mb-2">📬 Contact Info</h3>
           <div className="text-white">
             <ReactMarkdown
@@ -83,6 +85,7 @@ const ContactInfo = ({ selected }) => {
               {contactInfo}
             </ReactMarkdown>
           </div>
+          </SpotlightCard>
         </div>
       )}
     </div>
