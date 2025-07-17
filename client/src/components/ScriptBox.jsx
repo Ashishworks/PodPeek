@@ -95,7 +95,7 @@ const ScriptBox = ({
       {script && (
         <>
           <div className="mt-6" ref={scriptRef}>
-            <div className="bg-black border-4 p-4 rounded-2xl shadow whitespace-pre-wrap bg-transparent mb-2">
+            <div className="bg-black border-4 p-4 rounded-2xl shadow whitespace-pre-wrap mb-2">
               <h3 className="text-lg font-semibold mb-2 text-white">📝 Podcast Script</h3>
               <p className="text-sm text-white whitespace-pre-wrap break-words">
                 {cleanMarkdown(script)}
