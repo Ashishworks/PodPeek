@@ -1,3 +1,5 @@
+import SpotlightCard from "../animations/SpotLightCard";
+
 const InsightsGrid = ({ aiSections }) => {
   const cleanMarkdown = (text) => {
     return text
@@ -11,11 +13,13 @@ const InsightsGrid = ({ aiSections }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-transparent">
       {Object.entries(aiSections).map(([title, content]) => (
-        <div key={title} className="bg-black p-4 border-4 rounded-3xl shadow-sm bg-transparent">
-          <h3 className="text-md font-bold mb-2 text-white">{title}</h3>
-          <p className="text-sm text-white whitespace-pre-wrap">
+        <div key={title} className="bg-black p-4  rounded-3xl shadow-sm bg-transparent">
+          <SpotlightCard className="custom-spotlight-card" spotlightColor="rgba(0, 229, 255, 0.4)">
+          <h3 className="text-lg font-bold mb-2 flex justify-center mb-8">{title}</h3>
+          <p className="text-sm  whitespace-pre-wrap flex justify-center mb-4">
             {cleanMarkdown(content)}
           </p>
+          </SpotlightCard>
         </div>
       ))}
     </div>
