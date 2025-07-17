@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import ShinyText from "../animations/ShinyText";
+import { LoaderOne } from "../animations/Loader";
 
 const ContactInfo = ({ selected }) => {
   const [contactInfo, setContactInfo] = useState("");
@@ -9,18 +11,38 @@ const ContactInfo = ({ selected }) => {
     setContactInfo("");
   }, [selected]);
 
+  const fetchWithRetry = async (url, options = {}, retries = 2, delay = 2000) => {
+    for (let i = 0; i <= retries; i++) {
+      try {
+        const res = await fetch(url, options);
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res;
+      } catch (err) {
+        if (i === retries) throw err;
+        console.warn(`Retrying in ${delay}ms... (${i + 1}/${retries})`);
+        await new Promise((r) => setTimeout(r, delay));
+      }
+    }
+  };
+
   const handleGenerate = async () => {
     if (!selected) return;
     setLoading(true);
 
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/contact-info`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: selected.name,
-        description: selected.description,
-      }),
-    });
+    const res = await fetchWithRetry(
+      `${import.meta.env.VITE_BACKEND_URL}/api/contact-info`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: selected.name,
+          description: selected.description,
+        }),
+      },
+      2, // retries
+      2000 // 2 seconds delay
+    );
+
 
     const data = await res.json();
     setContactInfo(data.output);
@@ -28,35 +50,39 @@ const ContactInfo = ({ selected }) => {
   };
 
   return (
-    <div className="mt-4  ">
+    <div className="mt-4  mb-4">
       <button
         onClick={handleGenerate}
-        className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+        className="px-2 py-2 border-4 border-purple-500 text-purple-500 rounded-2xl hover:bg-purple-500 hover:text-white transition"
       >
-        📇 Generate Contact Info
+       Generate Contact Info
       </button>
 
       {loading && (
-        <p className="text-sm text-gray-500 mt-2">Fetching contact info...</p>
+        <div>
+          <ShinyText text="Fetching Contact Info..." disabled={false} speed={5} className='custom-class' /><LoaderOne />
+        </div>
       )}
 
       {contactInfo && (
-        <div className="mt-4 bg-white p-4 rounded shadow-sm bg-transparent">
-          <h3 className="text-lg font-semibold mb-2">📬 Contact Info</h3>
-          <ReactMarkdown
-            components={{
-              a: ({ node, ...props }) => (
-                <a
-                  {...props}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 underline"
-                />
-              ),
-            }}
-          >
-            {contactInfo}
-          </ReactMarkdown>
+        <div className="mt-4 bg-black p-4 rounded-2xl shadow-sm bg-transparent border-4">
+          <h3 className="text-lg text-white font-semibold mb-2">📬 Contact Info</h3>
+          <div className="text-white">
+            <ReactMarkdown
+              components={{
+                a: ({ node, ...props }) => (
+                  <a
+                    {...props}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white underline"
+                  />
+                ),
+              }}
+            >
+              {contactInfo}
+            </ReactMarkdown>
+          </div>
         </div>
       )}
     </div>

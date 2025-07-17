@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import html2pdf from "html2pdf.js";
+import { LoaderOne } from "../animations/Loader";
 
 const ScriptBox = ({
   selected,
@@ -61,7 +62,7 @@ const ScriptBox = ({
     <div className="mt-6">
       <button
         onClick={handleScriptGenerate}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        className="px-2 py-2 border-4 border-blue-500 text-blue-500 rounded-2xl hover:bg-blue-500 hover:text-white transition"
       >
         🎤 Generate Podcast Script
       </button>
@@ -69,9 +70,9 @@ const ScriptBox = ({
       <div className="mb-4">
         <label
           htmlFor="questionSlider"
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-medium text-white mb-1 pt-2"
         >
-          🎯 Number of Questions: <span className="font-bold">{numQuestions}</span>
+          🎯 Number of Questions: <span className="font-bold text-white">{numQuestions}</span>
         </label>
         <input
           id="questionSlider"
@@ -85,23 +86,26 @@ const ScriptBox = ({
       </div>
 
       {generating && (
-        <p className="text-sm text-gray-500 mt-2">Generating script...</p>
+        <>
+        <p className="text-sm text-gray-500 mt-2">Generating script... </p>
+        <LoaderOne/>
+        </>
       )}
 
       {script && (
         <>
           <div className="mt-6" ref={scriptRef}>
-            <div className="bg-white border p-4 rounded shadow whitespace-pre-wrap">
-              <h3 className="text-lg font-semibold mb-2">📝 Podcast Script</h3>
-              <p className="text-sm text-gray-800 whitespace-pre-wrap break-words">
+            <div className="bg-black border-4 p-4 rounded-2xl shadow whitespace-pre-wrap bg-transparent mb-2">
+              <h3 className="text-lg font-semibold mb-2 text-white">📝 Podcast Script</h3>
+              <p className="text-sm text-white whitespace-pre-wrap break-words">
                 {cleanMarkdown(script)}
               </p>
             </div>
           </div>
-          <div className="flex gap-4 mb-4">
+          <div className="flex gap-4 mb-4 ">
             <button
               onClick={handleDownloadPDF}
-              className="bg-green-600 text-white px-4 py-2 rounded shadow"
+              className="px-2 py-2 border-4 border-purple-500 text-purple-500 rounded-2xl hover:bg-purple-500 hover:text-white transition"
             >
               📥 Download as PDF
             </button>

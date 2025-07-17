@@ -11,6 +11,7 @@ app.use(cors());
 app.use(express.json()); // for parsing application/json
 
 // Routes
+
 app.use("/api/suggest", require("./routes/suggest"));
 app.use("/api/search", require("./routes/search"));
 app.use("/api/ai", require("./routes/ai"));

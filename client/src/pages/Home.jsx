@@ -11,6 +11,8 @@ import QuestionVariator from "../components/QuestionVariator";
 import TrueFocus from "../animations/TrueFocus";
 import { BackgroundBeams } from "../background/BackgroundBeams";
 import { BackgroundGradient } from "../CardsBg/BackgroundGradient";
+import ShinyText from "../animations/ShinyText";
+import { LoaderOne } from "../animations/Loader";
 
 
 
@@ -48,16 +50,7 @@ const Home = () => {
         }
     }, []);
 
-    const toggleDarkMode = () => {
-        const isDark = document.documentElement.classList.contains('dark');
-        if (isDark) {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        } else {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        }
-    };
+    
 
 
 
@@ -84,13 +77,14 @@ const Home = () => {
                 />
             </BackgroundGradient>
             {selected && (
-                <div className="mt-6 p-4 rounded shadow bg-transparent">
+                <div className="mt-6 p-4 shadow bg-transparent">
                     <PersonCard person={selected} />
                     <ContactInfo selected={selected} />
-                    <hr className="my-4" />
-
                     {loading ? (
-                        <p className="text-sm text-gray-500">Loading AI insights... usually takes less than a minute</p>
+                        <div className="mt-2">
+                        <ShinyText text="Loading AI insights.. usually takes less than a minute" disabled={false} speed={3} className='custom-class' />
+                        <LoaderOne />
+                        </div>
                     ) : (
                         <>
                             <InsightsGrid aiSections={aiSections} />

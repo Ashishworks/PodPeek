@@ -9,11 +9,11 @@ const InsightsGrid = ({ aiSections }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-transparent">
       {Object.entries(aiSections).map(([title, content]) => (
-        <div key={title} className="bg-white p-4 border rounded shadow-sm">
-          <h3 className="text-md font-bold mb-2">{title}</h3>
-          <p className="text-sm text-gray-800 whitespace-pre-wrap">
+        <div key={title} className="bg-black p-4 border-4 rounded-3xl shadow-sm bg-transparent">
+          <h3 className="text-md font-bold mb-2 text-white">{title}</h3>
+          <p className="text-sm text-white whitespace-pre-wrap">
             {cleanMarkdown(content)}
           </p>
         </div>

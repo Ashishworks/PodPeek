@@ -27,18 +27,18 @@ const QuestionVariator = ({ questions }) => {
 
 
     return (
-        <div className="mt-6">
+        <div className="mt-6 border-4 p-4 rounded-2xl">
             <h3 className="text-lg font-semibold mb-2">🔁 Generate Question Variations</h3>
             <input
                 type="number"
                 value={index}
                 onChange={(e) => setIndex(e.target.value)}
                 placeholder="Enter question number"
-                className="border px-2 py-1 rounded mr-2"
+                className="border px-2 py-1 rounded mr-2 text-white bg-black"
             />
             <button
                 onClick={handleGenerateVariations}
-                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                className="bg-blue-700 text-white px-3 py-1 rounded-2xl hover:bg-blue-800"
             >
                 Generate
             </button>
@@ -46,7 +46,7 @@ const QuestionVariator = ({ questions }) => {
             {loading && <p className="text-sm mt-2 text-gray-500">Generating variations...</p>}
 
             {variations.length > 0 && (
-                <ul className="mt-4 list-disc list-inside text-sm text-gray-800">
+                <ul className="mt-4 list-disc list-inside text-sm text-white">
                     {variations.map((v, i) => (
                         <li key={i}>{v}</li>
                     ))}
