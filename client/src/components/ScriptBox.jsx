@@ -84,6 +84,8 @@ const ScriptBox = ({
             </div>
           </div>
         )}
+        {!generating && (
+          <div>
         <label
           htmlFor="questionSlider"
           className="block text-sm font-medium text-white mb-1 pt-2"
@@ -100,6 +102,9 @@ const ScriptBox = ({
           onChange={(e) => setNumQuestions(Number(e.target.value))}
           className="w-full"
         />
+        </div>
+        )}
+        
       </div>
 
 
@@ -117,9 +122,9 @@ const ScriptBox = ({
           <div className="flex gap-4 mb-4 ">
             <button
               onClick={handleDownloadPDF}
-              className="px-2 py-2 border-4 border-purple-500 text-purple-500 rounded-2xl hover:bg-purple-500 hover:text-white transition"
+              className="px-2 py-2 mx-4 border-4 border-blue-400 text-blue-400 rounded-2xl hover:scale-105 hover:text-white transition flex justify-center hover:rounded-3xl"
             >
-              📥 Download as PDF
+               Download as PDF
             </button>
           </div>
         </>

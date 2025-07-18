@@ -83,7 +83,7 @@ const Home = () => {
                         {loading ? (
                             <div className="my-4 mx-4 flex flex-col ">
                                 <div className="flex justify-center mb-2">
-                                    <ShinyText text="Loading AI insights.. usually takes less than a minute" disabled={false} speed={3} className='custom-class' />
+                                    <ShinyText text="Loading content usually takes less than a minute." disabled={false} speed={3} className='custom-class' />
                                 </div>
                                 <div className="flex justify-center">
                                     <LoaderOne />
