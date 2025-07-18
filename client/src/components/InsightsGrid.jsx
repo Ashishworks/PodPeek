@@ -1,3 +1,4 @@
+import { FadeInSection } from "../animations/FadeInSection";
 import Orb from "../animations/Orb";
 import SpotlightCard from "../animations/SpotLightCard";
 
@@ -22,6 +23,7 @@ const InsightsGrid = ({ aiSections }) => {
         />
       </div>
 
+      <FadeInSection>
       <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
         {Object.entries(aiSections).map(([title, content]) => (
           <div key={title} className="flex">
@@ -37,6 +39,7 @@ const InsightsGrid = ({ aiSections }) => {
           </div>
         ))}
       </div>
+      </FadeInSection>
     </div>
 
   );

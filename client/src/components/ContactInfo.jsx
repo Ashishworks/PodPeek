@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import ShinyText from "../animations/ShinyText";
 import { LoaderOne } from "../animations/Loader";
 import SpotlightCard from "../animations/SpotLightCard";
+import { FadeInSection } from "../animations/FadeInSection";
 
 
 const ContactInfo = ({ selected }) => {
@@ -76,6 +77,7 @@ const ContactInfo = ({ selected }) => {
 
 
       {contactInfo && (
+        <FadeInSection>
         <div className="mt-4 p-4">
           <SpotlightCard className="custom-spotlight-card" spotlightColor="rgba(128, 0, 255, 0.4)">
           <h3 className="text-lg text-white font-semibold mb-2">📬 Contact Info</h3>
@@ -97,6 +99,7 @@ const ContactInfo = ({ selected }) => {
           </div>
           </SpotlightCard>
         </div>
+        </FadeInSection>
       )}
     </div>
   );

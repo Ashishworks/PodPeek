@@ -2,6 +2,7 @@ import { useRef } from "react";
 import html2pdf from "html2pdf.js";
 import { LoaderOne } from "../animations/Loader";
 import ShinyText from "../animations/ShinyText";
+import { FadeInSection } from "../animations/FadeInSection";
 
 const ScriptBox = ({
   selected,
@@ -86,47 +87,49 @@ const ScriptBox = ({
         )}
         {!generating && (
           <div>
-        <label
-          htmlFor="questionSlider"
-          className="block text-sm font-medium text-white mb-1 pt-2"
-        >
-          Number of Questions: <span className="font-bold text-white">{numQuestions}</span>
-        </label>
+            <label
+              htmlFor="questionSlider"
+              className="block text-sm font-medium text-white mb-1 pt-2"
+            >
+              Number of Questions: <span className="font-bold text-white">{numQuestions}</span>
+            </label>
 
-        <input
-          id="questionSlider"
-          type="range"
-          min="1"
-          max="40"
-          value={numQuestions}
-          onChange={(e) => setNumQuestions(Number(e.target.value))}
-          className="w-full"
-        />
-        </div>
+            <input
+              id="questionSlider"
+              type="range"
+              min="1"
+              max="40"
+              value={numQuestions}
+              onChange={(e) => setNumQuestions(Number(e.target.value))}
+              className="w-full"
+            />
+          </div>
         )}
-        
+
       </div>
 
 
 
       {script && (
         <>
-          <div className="mt-6" ref={scriptRef}>
-            <div className="bg-black border-4 p-4 rounded-2xl shadow whitespace-pre-wrap mb-2">
-              <h3 className="text-lg font-semibold mb-2 text-white">📝 Podcast Script</h3>
-              <p className="text-sm text-white whitespace-pre-wrap break-words">
-                {cleanMarkdown(script)}
-              </p>
+          <FadeInSection>
+            <div className="mt-6" ref={scriptRef}>
+              <div className="bg-black border-4 p-4 rounded-2xl shadow whitespace-pre-wrap mb-2">
+                <h3 className="text-lg font-semibold mb-2 text-white">📝 Podcast Script</h3>
+                <p className="text-sm text-white whitespace-pre-wrap break-words">
+                  {cleanMarkdown(script)}
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="flex gap-4 mb-4 ">
-            <button
-              onClick={handleDownloadPDF}
-              className="px-2 py-2 mx-4 border-4 border-blue-400 text-blue-400 rounded-2xl hover:scale-105 hover:text-white transition flex justify-center hover:rounded-3xl"
-            >
-               Download as PDF
-            </button>
-          </div>
+            <div className="flex gap-4 mb-4 ">
+              <button
+                onClick={handleDownloadPDF}
+                className="px-2 py-2 mx-4 border-4 border-blue-400 text-blue-400 rounded-2xl hover:scale-105 hover:text-white transition flex justify-center hover:rounded-3xl"
+              >
+                Download as PDF
+              </button>
+            </div>
+          </FadeInSection>
         </>
       )}
     </div>
