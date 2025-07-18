@@ -51,19 +51,29 @@ const ContactInfo = ({ selected }) => {
   };
 
   return (
-    <div className="mt-4  mb-4">
+    <div className="my-4">
+      {!loading && !contactInfo &&(
+          <div className="flex justify-center">
       <button
         onClick={handleGenerate}
-        className="px-2 py-2 border-4 border-purple-500 text-purple-500 rounded-2xl hover:bg-purple-500 hover:text-white transition"
+        className="px-2 py-2 mx-4 border-4 border-purple-800 text-purple-400 rounded-2xl hover:scale-105 hover:text-white transition"
       >
         Generate Contact Info
       </button>
-
+      </div>
+      )}
+      
       {loading && (
-        <div>
-          <ShinyText text="Fetching Contact Info..." disabled={false} speed={5} className='custom-class' /><LoaderOne />
+        <div className="my-4 mx-4 flex flex-col ">
+          <div className="flex justify-center mb-2">
+          <ShinyText text="Fetching Contact Info..." disabled={false} speed={5} className='custom-class' />
+          </div>
+          <div className="flex justify-center">
+          <LoaderOne />
+          </div>
         </div>
       )}
+
 
       {contactInfo && (
         <div className="mt-4 p-4">
@@ -77,7 +87,7 @@ const ContactInfo = ({ selected }) => {
                     {...props}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white underline"
+                    className="text-white"
                   />
                 ),
               }}

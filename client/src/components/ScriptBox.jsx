@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import html2pdf from "html2pdf.js";
 import { LoaderOne } from "../animations/Loader";
+import ShinyText from "../animations/ShinyText";
 
 const ScriptBox = ({
   selected,
@@ -60,20 +61,36 @@ const ScriptBox = ({
 
   return (
     <div className="mt-6">
-      <button
-        onClick={handleScriptGenerate}
-        className="px-2 py-2 border-4 border-blue-500 text-blue-500 rounded-2xl hover:bg-blue-500 hover:text-white transition"
-      >
-        🎤 Generate Podcast Script
-      </button>
+      {!generating && (
+        <div className="flex justify-center">
+          <button
+            onClick={handleScriptGenerate}
+            className="px-2 py-2 mx-4 border-4 border-purple-800 text-purple-400 rounded-2xl hover:scale-105 hover:text-white transition flex justify-center"
+          >
+            🎤 Generate Podcast Script
+          </button>
+        </div>
+      )}
+
 
       <div className="mb-4">
+        {generating && (
+          <div className="my-4 mx-4 flex flex-col ">
+            <div className="flex justify-center mb-2">
+              <ShinyText text="Designing script" disabled={false} speed={5} className='custom-class' />
+            </div>
+            <div className="flex justify-center">
+              <LoaderOne />
+            </div>
+          </div>
+        )}
         <label
           htmlFor="questionSlider"
           className="block text-sm font-medium text-white mb-1 pt-2"
         >
-          🎯 Number of Questions: <span className="font-bold text-white">{numQuestions}</span>
+          Number of Questions: <span className="font-bold text-white">{numQuestions}</span>
         </label>
+
         <input
           id="questionSlider"
           type="range"
@@ -85,12 +102,7 @@ const ScriptBox = ({
         />
       </div>
 
-      {generating && (
-        <>
-        <p className="text-sm text-gray-500 mt-2">Generating script... </p>
-        <LoaderOne/>
-        </>
-      )}
+
 
       {script && (
         <>

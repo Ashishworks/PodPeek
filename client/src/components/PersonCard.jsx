@@ -15,7 +15,13 @@ const PersonCard = ({ person }) => {
           speed={1}
         />
       </div>
-      <GlareHover>
+      <GlareHover
+        glareColor="#ffffff"
+        glareOpacity={0.3}
+        glareAngle={-30}
+        glareSize={300}
+        transitionDuration={1000}
+        playOnce={false}>
         <h2 className="text-2xl font-semibold mb-2 bg-transparent">Selected Person</h2>
 
         <p><strong>Name:</strong> {person.name}</p>

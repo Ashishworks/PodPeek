@@ -54,7 +54,6 @@ const SearchBar = ({ onSelect, selected }) => {
               key={idx}
               onClick={() => handleSelect(item)}
               className="p-2 hover:bg-gray-700 cursor-pointer flex items-center gap-2 transition-colors duration-300 rounded-2xl mx-2 my-2"
-
             >
               <div>
                 <p className="font-medium text-white">{item.name}</p>
@@ -65,7 +64,7 @@ const SearchBar = ({ onSelect, selected }) => {
         </ul>
       )}
 
-      {loading && <p className="text-sm text-white mt-2">Searching...</p>}
+      {loading && <p className="text-sm text-white mt-2 flex justify-center">Searching</p>}
     </div>
   );
 };
