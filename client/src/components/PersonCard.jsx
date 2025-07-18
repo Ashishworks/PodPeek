@@ -9,7 +9,7 @@ const PersonCard = ({ person }) => {
     <div className="relative p-2 rounded-xl overflow-hidden text-white flex justify-center" >
       <div className="absolute inset-0 -z-10">
         <Aurora
-          colorStops={["#2978ff", "#2978ff", "#2978ff"]}
+          colorStops={["#003795", "#003795", "#003795"]}
           blend={1}
           amplitude={2.0}
           speed={1}
