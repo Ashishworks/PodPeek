@@ -64,7 +64,7 @@ const SearchBar = ({ onSelect, selected }) => {
         </ul>
       )}
 
-      {loading && <p className="text-sm text-white mt-2 flex justify-center">Searching</p>}
+      {loading && <p className="text-sm text-white mt-2 mx-4">Searching</p>}
     </div>
   );
 };
