@@ -1,14 +1,20 @@
 import { useEffect } from "react";
 import Home from "./pages/Home";
 import Wakeup from "./Wakeup";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
-    return (
-      <>
-      <Wakeup/>
-      <Home />
-      </>
-    );
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<> <Wakeup /><Home /></>} />
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default App;

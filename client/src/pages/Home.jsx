@@ -14,6 +14,7 @@ import { BackgroundGradient } from "../CardsBg/BackgroundGradient";
 import ShinyText from "../animations/ShinyText";
 import { LoaderOne } from "../animations/Loader";
 import ClickSpark from "../animations/ClickSpark";
+import Login from "../components/Login";
 
 
 
@@ -59,6 +60,7 @@ const Home = () => {
             duration={400}
         >
             <div className="p-6 relative min-h-screen overflow-hidden bg-black text-white dark:text-white mix-blend-lighten">
+                <Login/>
                 <div className="mb-6">
                     <TrueFocus
                         sentence="Pod Peek"
