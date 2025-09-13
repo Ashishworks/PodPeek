@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import Home from "./pages/Home";
 import Wakeup from "./Wakeup";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
@@ -10,7 +9,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<> <Wakeup /><Home /></>} />
-          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
     </>
