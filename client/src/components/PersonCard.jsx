@@ -6,7 +6,7 @@ const PersonCard = ({ person }) => {
   if (!person) return null;
 
   return (
-    <div className="relative p-2 rounded-xl overflow-hidden text-white flex justify-center" >
+    <div className="relative p-2 rounded-xl text-white flex justify-center " >
       <div className="absolute inset-0 -z-10">
         <Aurora
           colorStops={["#003795", "#003795", "#003795"]}
@@ -22,11 +22,11 @@ const PersonCard = ({ person }) => {
         glareSize={300}
         transitionDuration={1000}
         playOnce={false}>
-        <h2 className="text-2xl font-semibold mb-2 bg-transparent">Selected Person</h2>
+        <h2 className="text-2xl font-semibold mb-0 sm:mb-2 bg-transparent">Selected Person</h2>
 
-        <p><strong>Name:</strong> {person.name}</p>
-        <p><strong>Description:</strong> {person.description}</p>
-        <p>
+        <p className="text-2xl"><strong>Name:</strong> {person.name}</p>
+        <p class="hidden sm:block"><strong>Description:</strong> {person.description}</p>
+        <p class="hidden sm:block">
           <strong>Source:</strong>{" "}
           <a
             href={person.url}
