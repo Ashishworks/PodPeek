@@ -1,7 +1,7 @@
 # 🎙️ PodPeek
 
-**Peek into your guest’s world — before you hit record.**  
-**PodPeek** is an AI-powered podcast research assistant that helps hosts craft smarter interviews. Instantly gather real-time insights about any known personality — from personal background to the latest news — and generate a personalized, ready-to-use podcast script.
+**Peek into your guest’s world before you hit record.**  
+**PodPeek** is an AI-powered podcast research assistant that helps hosts craft smarter interviews. Instantly gather real-time insights about any known personality from personal background to the latest news and generate a personalized, ready-to-use podcast script.
 
 ---
 
