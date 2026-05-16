@@ -23,7 +23,7 @@ Return only the list of questions in markdown numbering points, no intro or summ
     const response = await axios.post(
       "https://api.together.xyz/v1/chat/completions",
       {
-        model: "deepseek-ai/DeepSeek-V3",
+        model: "MiniMaxAI/MiniMax-M2.7",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.7,
         max_tokens: 800,
