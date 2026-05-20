@@ -56,11 +56,13 @@ const ContactInfo = ({ selected }) => {
       {!loading && !contactInfo &&(
           <div className="flex justify-center">
       <button
-        onClick={handleGenerate}
-        className="px-2 py-2 mx-4 border-4 border-purple-800 text-purple-400 rounded-2xl hover:scale-105 hover:text-white transition"
-      >
-        Generate Contact Info
-      </button>
+  onClick={handleGenerate}
+  className="group relative px-5 py-3 overflow-hidden rounded-xl bg-purple-950/40 border border-purple-500/30 text-purple-300 font-medium tracking-wide text-sm transition-all duration-300 hover:border-purple-400 hover:text-white hover:shadow-[0_0_20px_rgba(168,85,247,0.2)] active:scale-[0.98]"
+>
+  <span className="relative z-10 flex items-center gap-2">
+     Generate Contact Info
+  </span>
+</button>
       </div>
       )}
       
