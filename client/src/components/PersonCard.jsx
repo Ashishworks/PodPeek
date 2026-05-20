@@ -25,8 +25,8 @@ const PersonCard = ({ person }) => {
         <h2 className="text-2xl font-semibold mb-0 sm:mb-2 bg-transparent">Selected Person</h2>
 
         <p className="text-2xl"><strong>Name:</strong> {person.name}</p>
-        <p class="hidden sm:block"><strong>Description:</strong> {person.description}</p>
-        <p class="hidden sm:block">
+        <p className="hidden sm:block"><strong>Description:</strong> {person.description}</p>
+        <p className="hidden sm:block">
           <strong>Source:</strong>{" "}
           <a
             href={person.url}

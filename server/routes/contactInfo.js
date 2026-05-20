@@ -1,19 +1,31 @@
 const express = require("express");
 const router = express.Router();
-const axios = require("axios");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-3.1-flash-lite",
+});
 
 router.post("/", async (req, res) => {
   const { name, description } = req.body;
 
   if (!name || !description) {
-    return res.status(400).json({ error: "Missing name or description" });
+    return res.status(400).json({
+      error: "Missing name or description",
+    });
   }
 
   const prompt = `
- **${name}** who is described as **${description}**.
- search all the platforms and whole internet deeply to find info stated below
+Find professional/public contact information for:
 
-Return only relevant contact info in this format:
+${name}
+Description: ${description}
+
+Search across public platforms and websites.
+
+Return ONLY in this exact format:
 
 - Email:
 - Website:
@@ -22,30 +34,26 @@ Return only relevant contact info in this format:
 - Instagram:
 - Any other relevant social or booking links:
 
-If any of the above are not available, mention "Not Found". Keep it precise.
+If something is unavailable, write "Not Found".
+
+Keep the answer concise and accurate.
 `;
 
   try {
-    const response = await axios.post(
-      "https://api.together.xyz/v1/chat/completions",
-      {
-        model: "MiniMaxAI/MiniMax-M2.7",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.7,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.TOGETHER_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const result = await model.generateContent(prompt);
 
-    const contactInfo = response.data.choices[0].message.content;
-    res.json({ output: contactInfo });
+    const response = await result.response;
+    const contactInfo = response.text();
+
+    res.json({
+      output: contactInfo,
+    });
   } catch (err) {
-    console.error("Together.ai contact info error:", err.message);
-    res.status(500).json({ error: "Failed to fetch contact info" });
+    console.error("Gemini contact info error:", err);
+
+    res.status(500).json({
+      error: "Failed to fetch contact info",
+    });
   }
 });
 

@@ -1,23 +1,31 @@
 const express = require("express");
 const router = express.Router();
-const axios = require("axios");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-3.1-flash-lite",
+});
 
 // POST /api/ai
 router.post("/", async (req, res) => {
   const { name, description } = req.body;
 
   if (!name || !description) {
-    return res.status(400).json({ error: "Missing name or description" });
+    return res.status(400).json({
+      error: "Missing name or description",
+    });
   }
 
   const prompt = `
 You are a podcast research assistant AI.
 
-Your task is to help the host prepare for an in-depth podcast interview with **${name}** ** ${description}** .
+Your task is to help the host prepare for an in-depth podcast interview with **${name}** **${description}**.
 
 Return ONLY a well-structured Markdown document. Be detailed and go deep into each section. Use bullet points where useful. Avoid general summaries. Include specific examples, names, or dates if known.
 
-Each section should be at least 150–200 words. Add nuance, background, and recent relevance.
+Each section should be at least 150-200 words. Add nuance, background, and recent relevance.
 
 Strictly follow this structure:
 
@@ -34,36 +42,29 @@ Sensitive or uncomfortable subjects to avoid in the podcast — such as personal
 Any public backlash, scandals, or events that created tension, backlash, or polarization.
 
 ## 5. Most Recent Updates
-Highlight what they’ve done in the past 3 month. Travel, interviews, public appearances, projects, etc.
-return 2025 info if you failed to found recent info
+Highlight what they've done in the past 3 months. Travel, interviews, public appearances, projects, etc.
+Return 2025 info if you fail to find recent info.
 
 ## 6. Current Projects
 What are they working on now — businesses, content, startups, missions, hobbies, or advocacy.
 
-DO NOT add any disclaimers, summaries, or headings other than what is listed. Start directly from “## 1. Overview”.
+DO NOT add any disclaimers, summaries, or headings other than what is listed.
+Start directly from “## 1. Overview”.
 `;
 
   try {
-    const response = await axios.post(
-      "https://api.together.xyz/v1/chat/completions",
-      {
-        model: "MiniMaxAI/MiniMax-M2.7",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.7,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.TOGETHER_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const result = await model.generateContent(prompt);
 
-    const aiText = response.data.choices[0].message.content;
+    const response = await result.response;
+    const aiText = response.text();
+
     res.json({ output: aiText });
   } catch (err) {
-    console.error("Together.ai error:", err.message);
-    res.status(500).json({ error: "Failed to generate AI response" });
+    console.error("Gemini error:", err);
+
+    res.status(500).json({
+      error: "Failed to generate AI response",
+    });
   }
 });
 

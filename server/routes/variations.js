@@ -1,55 +1,65 @@
 const express = require("express");
 const router = express.Router();
-const axios = require("axios");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const genAI = new GoogleGenerativeAI(
+  process.env.GEMINI_API_KEY
+);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-3.1-flash-lite",
+});
 
 router.post("/", async (req, res) => {
   const { question } = req.body;
 
   if (!question) {
-    return res.status(400).json({ error: "Question is required" });
+    return res.status(400).json({
+      error: "Question is required",
+    });
   }
 
   try {
     const prompt = `
-You are an assistant that helps rephrase questions. Given the original question below, rewrite it in 3 different but equivalent ways, keeping the meaning intact.
+You are an assistant that helps rephrase podcast interview questions.
+
+Given the original question below, rewrite it in 3 different but equivalent ways while preserving the exact meaning.
 
 Original Question:
 "${question}"
 
-Rephrased Versions:
-1.
-2.
-3.
-    `.trim();
+Rules:
+- Keep the meaning intact
+- Make each version natural and conversational
+- Avoid repeating the original wording too closely
+- Keep them concise
 
-    const response = await axios.post(
-      "https://api.together.xyz/v1/chat/completions",
-      {
-        model: "meta-llama/Llama-3-70b-chat-hf", // use your preferred model
-        messages: [{ role: "user", content: prompt }],
-        max_tokens: 300,
-        temperature: 0.7,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.TOGETHER_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+Return ONLY this format:
 
-    const rawOutput = response.data.choices[0].message.content;
+1. ...
+2. ...
+3. ...
+`;
+
+    const result = await model.generateContent(prompt);
+
+    const response = await result.response;
+
+    const rawOutput = response.text();
 
     const variations = rawOutput
-      .split(/\n/)
+      .split("\n")
       .map((line) => line.trim())
       .filter((line) => /^[1-3]\./.test(line))
       .map((line) => line.replace(/^[1-3]\.\s*/, ""));
 
     res.json({ variations });
   } catch (err) {
-    console.error("Variation error:", err.message);
-    res.status(500).json({ error: "Failed to generate variations" });
+    console.error("Gemini variation error:", err);
+
+    res.status(500).json({
+      error: "Failed to generate variations",
+    });
   }
 });
 

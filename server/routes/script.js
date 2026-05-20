@@ -1,46 +1,64 @@
 const express = require("express");
-const axios = require("axios");
 const router = express.Router();
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const genAI = new GoogleGenerativeAI(
+  process.env.GEMINI_API_KEY
+);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-3.1-flash-lite",
+});
 
 router.post("/", async (req, res) => {
-  const { name, description,numQuestions = 10 } = req.body;
+  const {
+    name,
+    description,
+    numQuestions = 10,
+  } = req.body;
 
   if (!name || !description) {
-    return res.status(400).json({ error: "Missing name or description" });
+    return res.status(400).json({
+      error: "Missing name or description",
+    });
   }
 
   const prompt = `
-I’m going to take a podcast interview of **${name}**, who is ${description}.
-Please generate exactly ${numQuestions} thoughtful, unique, and engaging podcast questions that:
-- Encourage storytelling
-- Show research-based awareness
-- Are not generic
+I’m going to take a podcast interview of ${name}, who is described as:
 
-Return only the list of questions in markdown numbering points, no intro or summary.
+${description}
+
+Generate exactly ${numQuestions} thoughtful, unique, and engaging podcast interview questions.
+
+The questions should:
+- Encourage storytelling
+- Feel natural and conversational
+- Show deep research awareness
+- Avoid generic podcast clichés
+- Explore experiences, failures, mindset, decisions, and insights
+- Include a mix of personal, professional, and reflective questions
+
+Return ONLY the numbered list of questions in markdown.
+
+Do not add intros, summaries, explanations, or headings.
 `;
 
   try {
-    const response = await axios.post(
-      "https://api.together.xyz/v1/chat/completions",
-      {
-        model: "MiniMaxAI/MiniMax-M2.7",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.7,
-        max_tokens: 800,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.TOGETHER_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const result = await model.generateContent(prompt);
 
-    const script = response.data.choices[0].message.content;
-    res.json({ output: script });
+    const response = await result.response;
+
+    const script = response.text();
+
+    res.json({
+      output: script,
+    });
   } catch (err) {
-    console.error("Together.ai error:", err.message);
-    res.status(500).json({ error: "Failed to generate podcast script" });
+    console.error("Gemini error:", err);
+
+    res.status(500).json({
+      error: "Failed to generate podcast questions",
+    });
   }
 });
 
